@@ -12,13 +12,13 @@
 #import <objc/runtime.h>
 #import "DCBatteryView.h"
 @interface DCContentVC ()
-@property (nonatomic,strong) UITextView *textView;
-@property (nonatomic,strong) UILabel *bottomRightL;
-@property (nonatomic,strong) UILabel *bottomLeftL;
-@property (nonatomic,assign) NSInteger index;//页数
-@property (nonatomic,assign) NSInteger totalPages;//总页数
-@property (nonatomic,strong) DCBatteryView *battery;
-@property (nonatomic,strong) UIColor *otherTextColor;
+@property (nonatomic, copy) UITextView *textView;
+@property (nonatomic, strong) UILabel *bottomRightL;
+@property (nonatomic, strong) UILabel *bottomLeftL;
+@property (nonatomic, assign) NSInteger index;//页数
+@property (nonatomic, assign) NSInteger totalPages;//总页数
+@property (nonatomic, strong) DCBatteryView *battery;
+@property (nonatomic, strong) UIColor *otherTextColor;
 @end
 
 @implementation DCContentVC
@@ -31,44 +31,30 @@
 
     [self.view addSubview:self.textView];
     [self.view addSubview:self.bottomRightL];
-    [self.view addSubview: self.bottomLeftL];
+    [self.view addSubview:self.bottomLeftL];
     [self.view addSubview:self.battery];
-    
     [self.battery runProgress:[self getCurrentBatteryLevel]];
-    
-   
-
 }
--(void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    self.textView.frame = CGRectMake(20, is5_8inches?60:40, 0, 0);
+    self.textView.frame = CGRectMake(10, 10, 0, 0);
     self.textView.size = kContentSize;
     self.battery.frame = CGRectMake(kScreenW - 75,is5_8inches?15:10, 60, 20);
-    self.bottomRightL.frame = CGRectMake(kScreenW*0.5,is5_8inches?kScreenH - 50: kScreenH - 30, kScreenW*0.5 - 15, 20);
-    self.bottomLeftL.frame = CGRectMake(15, is5_8inches?kScreenH - 50: kScreenH - 30, kScreenW *0.5 - 15, 20);
+    self.bottomRightL.frame = CGRectMake(kScreenW * 0.5, kContentSize.height + 10, kScreenW * 0.5 - 15, 20);
+    self.bottomLeftL.frame = CGRectMake(15, kContentSize.height + 10, kScreenW * 0.5 - 15, 20);
     
 }
 
-#pragma mark  - event
-
-#pragma mark  - delegate
-
-#pragma mark  - notification
-
 #pragma mark  - private
--(void)Initialize
-{
+- (void)Initialize {
     _otherTextColor = [UIColor grayColor];
 }
--(void)updateUI
-{
+- (void)updateUI {
     NSString *readMode = [[NSUserDefaults standardUserDefaults] objectForKey:DCReadMode];
     if([readMode isEqualToString:DCReadDefaultMode])
     {
         self.view.backgroundColor = [UIColor colorWithRed:250/255.0 green:244/255.0 blue:233/255.0 alpha:1];
-        [self.content addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, self.content.length)];
-        self.textView.attributedText = self.content;
+        self.textView = self.inputTextView;
         self.bottomLeftL.textColor = [UIColor grayColor];
         self.bottomRightL.textColor = [UIColor grayColor];
         self.battery.lineColor = [UIColor grayColor];
@@ -76,8 +62,7 @@
     }else
     {
         self.view.backgroundColor = [UIColor colorWithRed:109/255.0 green:109/255.0 blue:111/255.0 alpha:1];
-        [self.content addAttribute:NSForegroundColorAttributeName value:[UIColor lightTextColor] range:NSMakeRange(0, self.content.length)];
-        self.textView.attributedText = self.content;
+        self.textView = self.inputTextView;
         self.bottomLeftL.textColor = [UIColor lightTextColor];
         self.bottomRightL.textColor = [UIColor lightTextColor];
         self.battery.lineColor = [UIColor lightTextColor];
@@ -122,17 +107,11 @@
 }
 
 #pragma mark  - setter or getter
--(void)setContent:(NSMutableAttributedString *)content
-{
-    _content = content;
-    self.textView.attributedText = content;
+- (void)setInputTextView:(UITextView *)inputTextView{
+    _textView = inputTextView;
+    _textView.backgroundColor = [UIColor colorWithRed:250/255.0 green:244/255.0 blue:233/255.0 alpha:1];
     //更新UI
     [self updateUI];
-}
--(void)setText:(NSString *)text
-{
-    _text = text;
-    self.textView.text = text;
 }
 
 -(UITextView *)textView

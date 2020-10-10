@@ -10,8 +10,7 @@
 #import "SDAutoLayout.h"
 
 @interface DCContentVC : UIViewController
-@property (nonatomic,copy) NSMutableAttributedString *content;//内容
-@property (nonatomic,copy) NSString *text;
+@property (nonatomic, copy) UITextView *inputTextView;
 -(void)updateUI;//更新ui
 
 -(void)setIndex:(NSInteger)index totalPages:(NSInteger)totalPages;

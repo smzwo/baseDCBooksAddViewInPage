@@ -19,7 +19,7 @@
 #define kScreenW [UIScreen mainScreen].bounds.size.width
 #define kScreenH [UIScreen mainScreen].bounds.size.height
 #define is5_8inches ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
-#define kContentSize     CGSizeMake(kScreenW - 40, is5_8inches?kScreenH - 120:kScreenH - 80)
+#define kContentSize     CGSizeMake(kScreenW - 20, kScreenH - 90)
 
 #define toolH is5_8inches?84:64
 //字体

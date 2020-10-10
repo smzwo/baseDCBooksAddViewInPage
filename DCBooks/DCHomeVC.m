@@ -61,7 +61,7 @@ static NSString *const cellKey = @"cellKey";
     return cell;
 }
 #pragma mark  - private
--(void)loadData
+- (void)loadData
 {
     //获取文件夹中的所有文件
     NSArray *fileArr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:DCBooksPath error:nil];
@@ -79,7 +79,7 @@ static NSString *const cellKey = @"cellKey";
     [self.tableView.mj_header endRefreshing];
     [self.tableView reloadData];
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     DCBookModel *book = self.books[indexPath.row];
